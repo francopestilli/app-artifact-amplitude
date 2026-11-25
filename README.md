@@ -1,6 +1,46 @@
 # app-artifact-amplitude 
 
+<!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
 
+> **Rejects MEG/EEG epochs whose peak-to-peak amplitude exceeds reject thresholds or falls below flat thresholds per channel type, with MNE-Python drop_bad, and outputs the cleaned epochs and a drop-log plot.**
+
+Parses reject and flat criteria given as 'type=value' pairs separated by semicolons (e.g. grad=4000e-13;mag=4e-12;eeg=150e-6) and calls epochs.drop_bad. Use it as a simple amplitude-based artifact rejection after epoching. Both criteria strings must list the same channel types in the same order, because the flat thresholds are keyed by the reject criteria's channel types.
+
+| | |
+|---|---|
+| 📥 **Inputs** | `neuro/meeg/mne/epochs` |
+| 📤 **Outputs** | `neuro/meeg/mne/epochs` · `generic/image/png` |
+| 🐳 **Container** | `brainlife/mne:0.23dev` |
+| ⚙️ **Resources** | 8 CPUs |
+| 🔗 **Run it** | [doi.org/10.25663/brainlife.app.653](https://doi.org/10.25663/brainlife.app.653) |
+
+#### 📥 Inputs
+
+| Input | Datatype | Required | Description |
+|---|---|---|---|
+| `epo` | `neuro/meeg/mne/epochs` | yes | Epoched MEG/EEG data in MNE epochs .fif format. |
+
+#### 📤 Outputs
+
+| Output | Datatype | Description |
+|---|---|---|
+| `out_dir` | `neuro/meeg/mne/epochs` | Epochs (meg-epo.fif) after dropping those that violate the amplitude criteria. |
+| `out_figs` | `generic/image/png` | Drop-log plot showing why epochs were rejected. |
+
+<details>
+<summary><b>⚙️ Parameters</b> (2)</summary>
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `flat_criteria` | string |  | a string that contains the flat criteria (minimum acceptable peak-to-peak amplitudes for each channel type in an epoch) |
+| `reject_criteria` | string |  | a string that contains the reject criteria (maximum acceptable peak-to-peak amplitudes for each channel type in an epoch) |
+
+</details>
+
+📚 **References used by this App:**
+- Avesani P, et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. Sci Data 6:69 (2019). [doi:10.1038/s41597-019-0073-y](https://doi.org/10.1038/s41597-019-0073-y)
+
+<!-- brainlife-app:end -->
 
 This is the repository of a Brainlife App for rejecting Epochs based on channel amplitude (https://mne.tools/stable/auto_tutorials/preprocessing/20_rejecting_bad_data.html#rejecting-epochs-based-on-channel-amplitude).
 
